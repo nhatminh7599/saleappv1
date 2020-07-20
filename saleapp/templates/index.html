@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chu</title>
+    <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet">
+</head>
+<body>
+    <h1>Welcome to website</h1>
+    <ul>
+        <li><a href="{{url_for('product_list')}}">Tat ca</a></li>
+        <li><a href="{{url_for('product_list_by_cate_id', category_id=1)}}">Dien thoai di dong</a></li>
+        <li><a href="{{url_for('product_list_by_cate_id', category_id=2)}}">May tinh bang</a></li>
+    </ul>
+</body>
+</html>
