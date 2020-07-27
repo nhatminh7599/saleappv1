@@ -24,9 +24,10 @@
             <td>{{product.name}}</td>
             <td>{{product.description}}</td>
             <td>{{ "{:,.1f}".format(product.price) }} VND</td>
-            <td><a href="#">Them</a> | <a href="#">Xoa</a></td>
+            <td><a href="{{ url_for('product_add', product_id = product.id) }}">Sua</a> | <a href="#">Xoa</a></td>
         </tr>
         {% endfor %}
     </table>
+    <div><a href="{{url_for('product_add')}}">Them</a></div>
 </body>
 </html>

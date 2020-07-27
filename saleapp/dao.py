@@ -21,5 +21,32 @@ def read_product_by_categoryid(category_id):
     #         res.append(product)
     # return res
 
+def read_product_by_id(id):
+    products = read_product()
+    return [product for product in products if product["id"] == int(id)]
+
+def product_add(name, description, price, image, category):
+    products = read_product()
+    products.append({
+        "id": len(products) + 1,
+        "name": name,
+        "description": description,
+        "price": float(price),
+        "image": image,
+        "category_id": float(category)
+    })
+    try:
+        f = open(os.path.join(app.root_path, 'data/products.json',  encoding="utf-8"), "w", encoding="utf-8")
+        json.dump(products, f, ensure_ascii=False, indent=4)
+        f.close()
+    except:
+        ex = Exception
+        return ex
+
+def read_categories():
+    with open(os.path.join(app.root_path, 'data/categories.json'), encoding="utf-8") as p:
+        categories = json.load(p)
+    return categories
+
 if __name__ == "__main__":
     print(read_product())

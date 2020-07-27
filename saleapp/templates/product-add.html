@@ -3,23 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Them san pham</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet">
 </head>
 <body>
-    <h1>Them san pham</h1>
-    <div>
-        <h5>Ten san pham</h5>
-        <input type="text" placeholder="Ten san pham">
+    <div class="container">
+        {{product}}
+        <h1 class="text-center">QUAN LY SAN PHAM</h1>
+        <form action="{{url_for('product_add')}}" method="POST">
+            <div class="row form-group">
+                <label class="col-1">Ten SP</label>
+                <input class="col-5 form-control" type="text" name="name" value="{{product.name}}"/>
+            </div>
+            <div class="row form-group">
+                <label class="col-1">Mo ta</label>
+                <textarea class="col-5 form-control" type="text" name="description">{{product.description}}</textarea>
+            </div>
+            <div class="row form-group">
+                <label class="col-1">Gia </label>
+                <input class="col-5 form-control" type="text" name="price" value="{{product.price}}"/>
+            </div>
+            <div class="row form-group">
+                <label class="col-1">Anh </label>
+                <input class="col-5 form-control" type="text" name="image" value="{{product.image}}"/>
+            </div>
+            <div class="row form-group">
+                <label class="col-1">Loai</label>
+                <select name="category">
+                    {%for cat in categories%}
+                        {% if product.id == cat.id %}
+                        <option value="{{cat.id}}" selected>{{cat.name}}</option>
+                        {% else %}
+                        <option value="{{cat.id}}" selected>{{cat.name}}</option>
+                        {% endif %}
+                    {%endfor%}
+                </select>
+            </div>
+                <input type="submit" class="btn btn-primary col-3"/>
+            {% if err_msg %}
+                <h1 class="text-center">{{err_msg}}</h1>
+            {% endif %}
+        </form>
+
     </div>
-    <div>
-        <h5></h5>
-        <input type="text" placeholder="Ten san pham">
-    </div>
-    <div>
-        <h5>Ten san pham</h5>
-        <input type="text" placeholder="Ten san pham">
-    </div>
-    <div></div>
-    <div></div>
 </body>
 </html>
