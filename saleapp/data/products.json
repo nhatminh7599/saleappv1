@@ -25,9 +25,9 @@
     },
     {
         "id": 4,
-        "name": "asdsad",
-        "description": "asdasd",
-        "price": 213213213213.0,
+        "name": "Iphone X",
+        "description": "Iphone X",
+        "price": 10000000.0,
         "image": "123213",
         "category_id": 1.0
     }

@@ -7,6 +7,21 @@
 </head>
 <body>
     <h1>Welcome to website</h1>
+    {% if session.user %}
+    <h3>
+        {{session.user.name}}
+    </h3>
+    <h3>
+        <a href="{{ url_for('logout') }}">logout</a>
+    </h3>
+    {% else %}
+    <div>
+        <a href="{{ url_for('login') }}">login</a>
+    </div>
+    <div>
+        <a href="{{ url_for('register') }}">register</a>
+    </div>
+    {% endif %}
     <ul>
         <li><a href="{{url_for('product_list')}}">Tat ca</a></li>
         <li><a href="{{url_for('product_list_by_cate_id', category_id=1)}}">Dien thoai di dong</a></li>

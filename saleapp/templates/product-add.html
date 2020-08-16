@@ -9,9 +9,8 @@
 </head>
 <body>
     <div class="container">
-        {{product}}
         <h1 class="text-center">QUAN LY SAN PHAM</h1>
-        <form action="{{url_for('product_add')}}" method="POST">
+        <form method="POST">
             <div class="row form-group">
                 <label class="col-1">Ten SP</label>
                 <input class="col-5 form-control" type="text" name="name" value="{{product.name}}"/>
@@ -35,7 +34,7 @@
                         {% if product.id == cat.id %}
                         <option value="{{cat.id}}" selected>{{cat.name}}</option>
                         {% else %}
-                        <option value="{{cat.id}}" selected>{{cat.name}}</option>
+                        <option value="{{cat.id}}">{{cat.name}}</option>
                         {% endif %}
                     {%endfor%}
                 </select>

@@ -4,8 +4,21 @@
     <meta charset="UTF-8">
     <title>Quan ly san pham</title>
     <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet">
+    <script>
+        function delpro(productId){
+            fetch("/api/product/" + productId, {
+                "method": "delete"
+            }).then(res => res.json()).then(data => {
+                if(data.status == 200){
+                    var d = document.getElementById("product" + productId)
+                    d.style.display = "None";
+                }
+            })
+        }
+    </script>
 </head>
 <body>
+    {{p}}
     <h1>Quan ly san pham</h1>
     <form action="{{url_for('product_list')}}">
         <div>
@@ -19,15 +32,16 @@
     </form>
     <table border="1" width="100%">
         {% for product in products %}
-        <tr>
+        <tr id="product{{product.id}}">
             <td><img src="{{product.image}}"/></td>
             <td>{{product.name}}</td>
             <td>{{product.description}}</td>
             <td>{{ "{:,.1f}".format(product.price) }} VND</td>
-            <td><a href="{{ url_for('product_add', product_id = product.id) }}">Sua</a> | <a href="#">Xoa</a></td>
+            <td><a href="{{ url_for('product_add', product_id = product.id) }}">Sua</a> | <a href="javascript:;" onclick="delpro({{product.id}})">Xoa</a></td>
         </tr>
         {% endfor %}
     </table>
-    <div><a href="{{url_for('product_add')}}">Them</a></div>
+    <div><a href="{{url_for('product_add', product_id = '') }}">Them</a></div>
+    <div><a href="{{ url_for('product_export') }}">Xuat danh sach san pham</a></div>
 </body>
 </html>
