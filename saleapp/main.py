@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, send_file, jsonify, session
-from saleapp import app, dao, utils
 
+from saleapp import app, dao, utils
+import json
 from saleapp.decorator import login_required
 
 
@@ -103,6 +104,34 @@ def register():
                 return redirect(url_for('login'))
             else: err_msg = "something wrong"
     return render_template("register.html", err_msg=err_msg)
+
+@app.route("/api/cart", methods=["post"])
+def add_to_cart():
+    data = json.loads(request.data)
+    product_id = str(data.get("product_id"))
+    name = data.get("name")
+    price = data.get("price")
+    if "cart" not in session:
+        session["cart"] = {}
+    cart = session["cart"]
+
+    if product_id in cart:
+        cart[product_id]["quantity"] = cart[product_id]["quantity"] + 1
+    else:
+        cart[product_id] = {
+            "id": int(product_id),
+            "name": name,
+            "price": price,
+            "quantity": 1
+        }
+
+    session["cart"] = cart
+
+    return  jsonify({"success": 1, "quantity": sum([c["quantity"] for c in list(session["cart"].values())])})
+
+@app.route("/payment")
+def cart():
+    return render_template("payment.html")
 
 if __name__ == "__main__":
     app.run(debug=True);

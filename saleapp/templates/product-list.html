@@ -15,6 +15,22 @@
                 }
             })
         }
+
+        function addToCart(id, name, price) {
+            fetch("/api/cart", {
+                body: JSON.stringify({
+                    "product_id": id,
+                    "name": name,
+                    "price": price
+                }),
+                method: "post",
+                "headers": {"Content-Type": "application/json"}
+            }).then(res => res.json()).then(data => {
+                var cart = document.getElementById("cartId")
+                cart.innerText = `(${data.quantity})`;
+                console.info(data)
+            })
+        }
     </script>
 </head>
 <body>
@@ -30,14 +46,14 @@
         </div>
         <input type="submit"/>
     </form>
+    <div><a href="{{ url_for('cart') }}">Gio hang</a>: <span id="cartId">(0)</span></div>
     <table border="1" width="100%">
         {% for product in products %}
         <tr id="product{{product.id}}">
-            <td><img src="{{product.image}}"/></td>
             <td>{{product.name}}</td>
             <td>{{product.description}}</td>
             <td>{{ "{:,.1f}".format(product.price) }} VND</td>
-            <td><a href="{{ url_for('product_add', product_id = product.id) }}">Sua</a> | <a href="javascript:;" onclick="delpro({{product.id}})">Xoa</a></td>
+            <td><a href="{{ url_for('product_add', product_id = product.id) }}">Sua</a> | <a href="javascript:;" onclick="delpro({{product.id}})">Xoa</a> | <a href="javascript:;" onclick="addToCart({{product.id}}, '{{product.name}}', {{product.price}})"> Them vao gio </a></td>
         </tr>
         {% endfor %}
     </table>
